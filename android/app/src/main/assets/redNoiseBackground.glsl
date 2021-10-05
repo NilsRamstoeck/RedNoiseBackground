@@ -1,5 +1,3 @@
-precision highp float;
-
 uniform float xscale;
 uniform float yscale;
 
@@ -8,9 +6,6 @@ uniform float yoff;
 
 uniform int layers;
 uniform float freq_inc;
-
-uniform float falloff_m;
-uniform float layer_fade;
 
 float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
@@ -40,14 +35,14 @@ float pnoise(vec3 p){
 
 
 float layerdNoise(vec3 p, int layers, float freq_inc){
-   float freq = 1.0;
-   float v = 0.0;
-   float falloff = 1.0;
+   float freq = 1;
+   float v = 0;
+   float falloff = 1;
    for(int i = 0; i < layers; i++){
       v += pnoise(p * freq) * falloff;
-      v *= layer_fade;
+      v *= 0.8;
       freq *= freq_inc;
-      falloff *= falloff_m;
+      falloff *= 0.2;
    }
 
    return v;
